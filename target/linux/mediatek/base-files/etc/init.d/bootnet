@@ -1,0 +1,15 @@
+#!/bin/sh /etc/rc.common
+
+START=100
+
+start() {
+	rm /etc/resolv.conf
+	ln -s /tmp/resolv.conf.auto /etc/resolv.conf
+	wmt_loader
+	stp_uart_launcher -p /etc/firmware &
+	sleep 6
+	echo 1 >/dev/wmtWifi
+        echo A >/dev/wmtWifi
+	ifconfig wlan0 up
+        ifconfig ap0 up
+}
